@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: The Wellness Project Plugin
 Bundle-SymbolicName: com.thewellness_project.plugin;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 1.0.0
 Bundle-Vendor: THEWELLNESS_PROJECT
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.adempiere.base;bundle-version="4.1.0",
@@ -16,7 +16,8 @@ Require-Bundle: org.adempiere.base;bundle-version="4.1.0",
  zkplus;bundle-version="8.0.1",
  zul;bundle-version="8.0.1",
  zweb;bundle-version="8.0.1",
- org.adempiere.ui;bundle-version="4.1.0"
+ org.adempiere.ui;bundle-version="4.1.0",
+ org.adempiere.ui.swing;resolution:=optional
 Bundle-Activator: org.adempiere.plugin.utils.AdempiereActivator
 Service-Component: component.xml,
  OSGI-INF/TheWellnessFormFactory.xml
