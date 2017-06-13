@@ -19,6 +19,5 @@ Require-Bundle: org.adempiere.base;bundle-version="4.1.0",
  org.adempiere.ui;bundle-version="4.1.0",
  org.adempiere.ui.swing;resolution:=optional
 Bundle-Activator: org.adempiere.plugin.utils.AdempiereActivator
-Service-Component: component.xml,
- OSGI-INF/TheWellnessFormFactory.xml
+Service-Component: OSGI-INF/TheWellnessFormFactory.xml
 Bundle-ActivationPolicy: lazy
