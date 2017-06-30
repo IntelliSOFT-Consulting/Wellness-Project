@@ -3,10 +3,11 @@
  */
 package com.thewellness_project.form;
 
+import java.awt.GridLayout;
+
 import org.adempiere.webui.component.Borderlayout;
 import org.adempiere.webui.component.Checkbox;
 import org.adempiere.webui.component.Datebox;
-import org.adempiere.webui.component.EditorBox;
 import org.adempiere.webui.component.Grid;
 import org.adempiere.webui.component.GridFactory;
 import org.adempiere.webui.component.Label;
@@ -19,8 +20,10 @@ import org.adempiere.webui.panel.CustomForm;
 import org.adempiere.webui.panel.IFormController;
 import org.adempiere.webui.util.ZKUpdateUtil;
 import org.zkoss.zhtml.Center;
+import org.zkoss.zhtml.Textarea;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
+import org.zkoss.zul.Image;
 import org.zkoss.zul.North;
 import org.zkoss.zul.Radio;
 import org.zkoss.zul.Radiogroup;
@@ -46,9 +49,11 @@ public class WEnrollmentFormController implements IFormController, EventListener
 	
 	private Borderlayout mainLayout = new Borderlayout();
 	private Panel profilePanel = new Panel();
-	private Panel bioDataPanel = new Panel();
+	private Grid headerLayout = GridFactory.newGridLayout();
+	private Grid titleLayout = GridFactory.newGridLayout();
 	private Grid profileLayout = GridFactory.newGridLayout();
 	private Grid bioDataLayout = GridFactory.newGridLayout();
+	Image logo =  new Image();
 	private Label enrollmentFormTitleLabel = new Label();
 	private Label myWellnessLabel = new Label();
 	private Checkbox walkCheckbox = new Checkbox();
@@ -73,7 +78,7 @@ public class WEnrollmentFormController implements IFormController, EventListener
 	private Label mobileNoLabel = new Label();
 	private Textbox mobileNoField = new Textbox();
 	private Label deliveryAddressLabel = new Label();
-	private Textbox deliveryAddressField = new Textbox();//TODO add to have 3 rows
+	private Textarea deliveryAddressField = new Textarea();
 	private Label otherNoLabel = new Label();
 	private Textbox otherNoField = new Textbox();
 	private Label genderLabel = new Label();
@@ -137,9 +142,12 @@ public class WEnrollmentFormController implements IFormController, EventListener
 	private void init() {
 		form.appendChild(mainLayout);
 		
+		profilePanel.appendChild(headerLayout);
+		profilePanel.appendChild(titleLayout);
 		profilePanel.appendChild(profileLayout);
-		bioDataPanel.appendChild(bioDataLayout);
+		profilePanel.appendChild(bioDataLayout);
 		
+		logo.setSrc("http://thewellness-project.com/wp-content/uploads/2017/05/top.jpg");//TODO add image images/wellness_logo.png		
 		enrollmentFormTitleLabel.setText("ENROLMENT FORM");
 		myWellnessLabel.setText("My Wellness:");		
 		walkCheckbox.setText("Walk");	
@@ -209,22 +217,63 @@ public class WEnrollmentFormController implements IFormController, EventListener
 		soyaCheckbox.setText("Soya");
 		
 		North north = new North();
-		north.setStyle("border: none");
+		north.setStyle("border: none; background-color: #F9F9F9;");
 		mainLayout.appendChild(north);
-		north.appendChild(profilePanel);
+		north.appendChild(profilePanel);	
+		
+		initHeader();
+		
+		initTitle();
+		
+			
+		initProfileFields();
+		
+	}
+
+	private void initHeader() {		
+		
+		Rows rows = null;
+		Row row = null;
+		
+		ZKUpdateUtil.setWidth(headerLayout, "80%");
+		rows = headerLayout.newRows();
+		row = rows.newRow();
+		row.appendChild(logo);
+		
+		//add the company address
+		Grid address = GridFactory.newGridLayout();
+		Rows addresses = address.newRows();
+		Row addressLine = null;
+		
+		addressLine = addresses.newRow();
+		addressLine.appendCellChild(new Label(""));
+		
+		
+	}
+	
+	private void initTitle() {
+		Rows rows = null;
+		Row row = null;
+		
+		ZKUpdateUtil.setWidth(titleLayout, "80%");
+		rows = titleLayout.newRows();
+		row = rows.newRow();
+		Center center = new Center();
+		enrollmentFormTitleLabel.setStyle("font-size:22px");
+		center.appendChild(enrollmentFormTitleLabel);
+		row.appendCellChild(center);
+	}
+
+	private void initProfileFields(){
 		
 		Rows rows = null;
 		Row row = null;
 		
 		ZKUpdateUtil.setWidth(profileLayout, "80%");
 		rows = profileLayout.newRows();
-		row = rows.newRow();
-		Center center = new Center();
-		center.appendChild(enrollmentFormTitleLabel);
-		row.appendCellChild(center);
 
 		row = rows.newRow();
-		row.appendCellChild(myWellnessLabel.rightAlign(),1);
+		row.appendCellChild(myWellnessLabel,1);
 		row.appendCellChild(walkCheckbox,1);
 		row.appendCellChild(marathonCheckbox,1);
 		row.appendCellChild(runCheckbox,1);
@@ -232,59 +281,59 @@ public class WEnrollmentFormController implements IFormController, EventListener
 		row.appendCellChild(strollCheckbox,1);
 		
 		row = rows.newRow();
-		row.appendChild(firstNameLabel.rightAlign());
-		row.appendChild(firstNameField);
-		row.appendChild(middleNameLabel.rightAlign());
-		row.appendChild(middleNameField);
+		row.appendCellChild(firstNameLabel,1);
+		row.appendCellChild(firstNameField,2);
+		row.appendCellChild(middleNameLabel,1);
+		row.appendCellChild(middleNameField,2);
 		
 		row = rows.newRow();
-		row.appendChild(lastNameLabel.rightAlign());
-		row.appendChild(lastNameField);
-		row.appendChild(dOBLabel.rightAlign());
-		row.appendChild(dOBField);
+		row.appendCellChild(lastNameLabel,1);
+		row.appendCellChild(lastNameField,2);
+		row.appendCellChild(dOBLabel,1);
+		row.appendCellChild(dOBField,2);
 		
 		row = rows.newRow();
-		row.appendChild(postalAddressLabel.rightAlign());
-		row.appendChild(postalAddressField);
-		row.appendChild(iDLabel.rightAlign());
-		row.appendChild(iDField);
+		row.appendCellChild(postalAddressLabel,1);
+		row.appendCellChild(postalAddressField,2);
+		row.appendCellChild(iDLabel,1);
+		row.appendCellChild(iDField,2);
 		
 		row = rows.newRow();
-		row.appendChild(townLabel.rightAlign());
-		row.appendChild(townField);
-		row.appendChild(mobileNoLabel.rightAlign());
-		row.appendChild(mobileNoField);
+		row.appendCellChild(townLabel,1);
+		row.appendCellChild(townField,2);
+		row.appendCellChild(mobileNoLabel,1);
+		row.appendCellChild(mobileNoField,2);
 		
 		row = rows.newRow();
-		row.appendChild(deliveryAddressLabel.rightAlign());
-		row.appendChild(deliveryAddressField);
-		row.appendChild(otherNoLabel.rightAlign());
-		row.appendChild(otherNoField);
-		row.appendChild(otherNoLabel.rightAlign());
-		row.appendChild(otherNoField);
+		row.appendCellChild(deliveryAddressLabel,1);
+		row.appendCellChild(deliveryAddressField,2);
+		row.appendCellChild(otherNoLabel,1);
+		row.appendCellChild(otherNoField,2);
+		
+		row = rows.newRow();
 		Radio female = gender.appendItem("Female", "female");
 		female.setName(genderName);
 		Radio male = gender.appendItem("Male", "male");
 		male.setName(genderName);
-		row.appendChild(genderLabel.rightAlign());
-		row.appendChild(gender);
+		row.appendCellChild(genderLabel,1);
+		row.appendCellChild(gender,2);
 		
 		row = rows.newRow();
-		row.appendChild(emailLabel.rightAlign());
-		row.appendChild(emailField);
+		row.appendCellChild(emailLabel,1);
+		row.appendCellChild(emailField,5);
 		
 		row = rows.newRow();
-		row.appendChild(heightLabel.rightAlign());
-		row.appendChild(heightField);
-		row.appendChild(weightLabel.rightAlign());
-		row.appendChild(weightField);
-		row.appendChild(goalWeightLabel.rightAlign());
-		row.appendChild(goalWeightField);
-		row.appendChild(bpLabel.rightAlign());
-		row.appendChild(bpField);
+		row.appendCellChild(heightLabel,1);
+		row.appendCellChild(heightField,1);
+		row.appendCellChild(weightLabel);
+		row.appendCellChild(weightField);
+		row.appendCellChild(goalWeightLabel);
+		row.appendCellChild(goalWeightField);
+		row.appendCellChild(bpLabel);
+		row.appendCellChild(bpField);
 		
 		row = rows.newRow();
-		row.appendChild(whatsAppLabel.rightAlign());
+		row.appendChild(whatsAppLabel);
 		Radio whatsAppYes = whatsApp.appendItem("Y", "y");
 		whatsAppYes.setName(whatsappName);
 		Radio whatsAppNo = whatsApp.appendItem("N", "n");
@@ -317,9 +366,9 @@ public class WEnrollmentFormController implements IFormController, EventListener
 		yesOtherCondition.setName(otherConditionsName);
 		Radio noOtherCondition = otherConditions.appendItem("No", "n");
 		noOtherCondition.setName(otherConditionsName);
-		row.appendChild(otherConditionLabel.rightAlign());
+		row.appendChild(otherConditionLabel);
 		row.appendChild(otherConditions);
-		row.appendChild(otherConditionNoteLabel.rightAlign());
+		row.appendChild(otherConditionNoteLabel);
 		row.appendChild(otherConditionNoteField);
 		
 		row = rows.newRow();
@@ -327,9 +376,9 @@ public class WEnrollmentFormController implements IFormController, EventListener
 		yesOtherOperation.setName(otherOperationsName);
 		Radio noOtherOperation = otherOperations.appendItem("No", "n");
 		noOtherOperation.setName(otherOperationsName);
-		row.appendChild(otherOperationLabel.rightAlign());
+		row.appendChild(otherOperationLabel);
 		row.appendChild(otherOperations);
-		row.appendChild(otherOperationNoteLabel.rightAlign());
+		row.appendChild(otherOperationNoteLabel);
 		row.appendChild(otherOperationNoteField);
 		
 		row = rows.newRow();
@@ -337,38 +386,38 @@ public class WEnrollmentFormController implements IFormController, EventListener
 		yesAllergies.setName(allergiesName);
 		Radio noAllergies = allergies.appendItem("No", "n");
 		noAllergies.setName(allergiesName);
-		row.appendChild(allergiesLabel.rightAlign());
+		row.appendChild(allergiesLabel);
 		row.appendChild(allergies);
-		row.appendChild(allergiesNoteLabel.rightAlign());
+		row.appendChild(allergiesNoteLabel);
 		row.appendChild(allergiesNoteField);
 
 		row = rows.newRow();
-		row.appendChild(medicationLabel.rightAlign());
+		row.appendChild(medicationLabel);
 		row.appendChild(medicationField);
 				
 		row = rows.newRow();
-		row.appendChild(pleaseSpecifyStateLabel.rightAlign());
+		row.appendChild(pleaseSpecifyStateLabel);
 		Radio yesPregnant = pregnant.appendItem("Yes", "y");
 		yesPregnant.setName(pregnantName);
 		Radio noPregnant = pregnant.appendItem("No", "n");
 		noPregnant.setName(pregnantName);
-		row.appendChild(pregnantLabel.rightAlign());
+		row.appendChild(pregnantLabel);
 		row.appendChild(pregnant);
 		Radio yesBreastFeeding = breastFeeding.appendItem("Yes", "y");
 		yesBreastFeeding.setName(breastFeedingName);
 		Radio noBreastFeeding = breastFeeding.appendItem("No", "n");
 		noBreastFeeding.setName(breastFeedingName);
-		row.appendChild(breastFeedingLabel.rightAlign());
+		row.appendChild(breastFeedingLabel);
 		row.appendChild(breastFeeding);
 		Radio yesVegeterian = vegeterian.appendItem("Yes", "y");
 		yesVegeterian.setName(vegeterianName);
 		Radio noVegeterian = vegeterian.appendItem("No", "n");
 		noVegeterian.setName(vegeterianName);
-		row.appendChild(vegeterianLabel.rightAlign());
+		row.appendChild(vegeterianLabel);
 		row.appendChild(vegeterian);
 		
 		row = rows.newRow();
-		row.appendChild(foodsCanEatLabel.rightAlign());
+		row.appendChild(foodsCanEatLabel);
 		row = rows.newRow();
 		row.appendCellChild(fishCheckbox,1);
 		row.appendCellChild(chickenCheckbox,1);
@@ -377,7 +426,6 @@ public class WEnrollmentFormController implements IFormController, EventListener
 		row.appendCellChild(yoghurtCheckbox,1);
 		row.appendCellChild(tofuCheckbox,1);
 		row.appendCellChild(soyaCheckbox,1);
-		
 		
 	}
 
