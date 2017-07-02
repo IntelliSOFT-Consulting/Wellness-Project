@@ -141,6 +141,7 @@ public class WEnrollmentFormController implements IFormController, EventListener
 
 	private void init() {
 		form.appendChild(mainLayout);
+		mainLayout.setStyle("overflow-y: scroll;");
 		
 		profilePanel.appendChild(headerLayout);
 		profilePanel.appendChild(titleLayout);
@@ -217,7 +218,7 @@ public class WEnrollmentFormController implements IFormController, EventListener
 		soyaCheckbox.setText("Soya");
 		
 		North north = new North();
-		north.setStyle("border: none; background-color: #F9F9F9;");
+		north.setStyle("border: none;");
 		mainLayout.appendChild(north);
 		north.appendChild(profilePanel);	
 		
