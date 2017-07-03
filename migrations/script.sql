@@ -134,4 +134,4 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE adempiere.twp_profile_conditions
-  OWNER TO postgres;
+  OWNER TO adempiere;
