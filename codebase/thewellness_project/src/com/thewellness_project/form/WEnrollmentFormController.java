@@ -48,10 +48,12 @@ public class WEnrollmentFormController implements IFormController, EventListener
 	String vegeterianName = "vegeterian";
 	
 	private Borderlayout mainLayout = new Borderlayout();
-	private Panel profilePanel = new Panel();
+	private Panel mainPanel = new Panel();
 	private Grid headerLayout = GridFactory.newGridLayout();
 	private Grid titleLayout = GridFactory.newGridLayout();
 	private Grid profileLayout = GridFactory.newGridLayout();
+	private Grid heightWeightLayout = GridFactory.newGridLayout();
+	private Grid whatsappLayout = GridFactory.newGridLayout();
 	private Grid bioDataLayout = GridFactory.newGridLayout();
 	Image logo =  new Image();
 	private Label enrollmentFormTitleLabel = new Label();
@@ -143,10 +145,12 @@ public class WEnrollmentFormController implements IFormController, EventListener
 		form.appendChild(mainLayout);
 		mainLayout.setStyle("overflow-y: scroll;");
 		
-		profilePanel.appendChild(headerLayout);
-		profilePanel.appendChild(titleLayout);
-		profilePanel.appendChild(profileLayout);
-		profilePanel.appendChild(bioDataLayout);
+		mainPanel.appendChild(headerLayout);
+		mainPanel.appendChild(titleLayout);
+		mainPanel.appendChild(profileLayout);
+		mainPanel.appendChild(heightWeightLayout);
+		mainPanel.appendChild(whatsappLayout);
+		mainPanel.appendChild(bioDataLayout);
 		
 		logo.setSrc("http://thewellness-project.com/wp-content/uploads/2017/05/top.jpg");//TODO add image images/wellness_logo.png		
 		enrollmentFormTitleLabel.setText("ENROLMENT FORM");
@@ -220,14 +224,19 @@ public class WEnrollmentFormController implements IFormController, EventListener
 		North north = new North();
 		north.setStyle("border: none;");
 		mainLayout.appendChild(north);
-		north.appendChild(profilePanel);	
+		north.appendChild(mainPanel);	
 		
 		initHeader();
 		
-		initTitle();
-		
+		initTitle();		
 			
-		initProfileFields();
+		initProfileFields();	
+		
+		initHeightWeigtFields();
+		
+		initWhatsappFields();
+	
+		initBioDataFields();
 		
 	}
 
@@ -323,23 +332,50 @@ public class WEnrollmentFormController implements IFormController, EventListener
 		row.appendCellChild(emailLabel,1);
 		row.appendCellChild(emailField,5);
 		
+	}
+
+	private void initHeightWeigtFields() {
+		Rows rows = null;
+		Row row = null;
+		
+		ZKUpdateUtil.setWidth(heightWeightLayout, "80%");
+		rows = heightWeightLayout.newRows();
+		
 		row = rows.newRow();
 		row.appendCellChild(heightLabel,1);
 		row.appendCellChild(heightField,1);
-		row.appendCellChild(weightLabel);
-		row.appendCellChild(weightField);
-		row.appendCellChild(goalWeightLabel);
-		row.appendCellChild(goalWeightField);
-		row.appendCellChild(bpLabel);
-		row.appendCellChild(bpField);
+		row.appendCellChild(weightLabel,1);
+		row.appendCellChild(weightField,1);
+		row.appendCellChild(goalWeightLabel,1);
+		row.appendCellChild(goalWeightField,1);
+		row.appendCellChild(bpLabel,1);
+		row.appendCellChild(bpField,1);
+		
+	}
+
+	private void initWhatsappFields() {
+		Rows rows = null;
+		Row row = null;
+		
+		ZKUpdateUtil.setWidth(whatsappLayout, "80%");
+		rows = whatsappLayout.newRows();
 		
 		row = rows.newRow();
-		row.appendChild(whatsAppLabel);
+		row.appendCellChild(whatsAppLabel);
 		Radio whatsAppYes = whatsApp.appendItem("Y", "y");
 		whatsAppYes.setName(whatsappName);
 		Radio whatsAppNo = whatsApp.appendItem("N", "n");
 		whatsAppNo.setName(whatsappName);
-		row.appendChild(whatsApp);
+		row.appendCellChild(whatsApp);
+		
+	}
+
+	private void initBioDataFields() {
+		Rows rows = null;
+		Row row = null;
+		
+		ZKUpdateUtil.setWidth(bioDataLayout, "80%");
+		rows = bioDataLayout.newRows();
 		
 		row = rows.newRow();
 		Center medicalHistoryCenter = new Center();
