@@ -128,10 +128,64 @@ COMMENT ON TABLE adempiere.twp_foods
   twp_profile_id numeric(10,0) NOT NULL,
   twp_medical_conditions_id numeric(10,0) NOT NULL,
   note text,
-  CONSTRAINT twp_profile_conditions_pkey PRIMARY KEY (twp_profile_id, twp_medical_conditions_id)
+  CONSTRAINT twp_profile_conditions_pkey PRIMARY KEY (twp_profile_id, twp_medical_conditions_id),
+  CONSTRAINT twpprofileconditions_twpconditions FOREIGN KEY (twp_medical_conditions_id)
+      REFERENCES adempiere.twp_medical_conditions (twp_medical_conditions_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT twpprofileconditions_twpprofile FOREIGN KEY (twp_profile_id)
+      REFERENCES adempiere.twp_profile (twp_profile_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
 )
 WITH (
   OIDS=FALSE
 );
 ALTER TABLE adempiere.twp_profile_conditions
   OWNER TO adempiere;
+  
+  
+CREATE TABLE adempiere.twp_profile_wellness
+(
+  created timestamp without time zone NOT NULL DEFAULT now(),
+  createdby numeric(10,0) NOT NULL,
+  updated timestamp without time zone NOT NULL DEFAULT now(),
+  updatedby numeric(10,0) NOT NULL,
+  twp_profile_id numeric(10,0) NOT NULL,
+  twp_wellness_id numeric(10,0) NOT NULL,
+  CONSTRAINT twp_profile_wellness_pkey PRIMARY KEY (twp_profile_id, twp_wellness_id),
+  CONSTRAINT twpprofilewellness_twpwellness FOREIGN KEY (twp_wellness_id)
+      REFERENCES adempiere.twp_wellness_state (twp_wellness_state_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT twpwellnessprofile_twpprofile FOREIGN KEY (twp_profile_id)
+      REFERENCES adempiere.twp_profile (twp_profile_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE adempiere.twp_profile_wellness
+  OWNER TO adempiere;
+  
+  
+CREATE TABLE adempiere.twp_profile_foods
+(
+  created timestamp without time zone NOT NULL DEFAULT now(),
+  createdby numeric(10,0) NOT NULL,
+  updated timestamp without time zone NOT NULL DEFAULT now(),
+  updatedby numeric(10,0) NOT NULL,
+  twp_profile_id numeric(10,0) NOT NULL,
+  twp_foods_id numeric(10,0) NOT NULL,
+  CONSTRAINT twp_profile_foods_pkey PRIMARY KEY (twp_profile_id, twp_foods_id),
+  CONSTRAINT twpprofilefoods_twpfoods FOREIGN KEY (twp_foods_id)
+      REFERENCES adempiere.twp_foods (twp_foods_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT twpprofilefoods_twpprofile FOREIGN KEY (twp_profile_id)
+      REFERENCES adempiere.twp_profile (twp_profile_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE adempiere.twp_profile_foods
+  OWNER TO adempiere;
+  
+  
