@@ -22,13 +22,13 @@ CREATE TABLE adempiere.twp_profile
   other_number character varying(256),
   gender character varying(10) NOT NULL, -- MALE for male, FEMALE for female
   email character varying(512) NOT NULL,
-  height numeric(4,2) NOT NULL, -- height in cm
-  weight numeric(3,2) NOT NULL, -- Weight in kg
-  goal_weight numeric(3,2), -- Goal weight in kg
+  height numeric(6,2) NOT NULL, -- height in cm
+  weight numeric(5,2) NOT NULL, -- Weight in kg
+  goal_weight numeric(5,2), -- Goal weight in kg
   blood_pressure character varying(32) NOT NULL,
   add_whatsapp character(1),
-  pregnant boolean, -- null for males, true or false for female
-  breast_feeding boolean, -- null for male, true or false for female
+  pregnant character(1), -- null for males, true or false for female
+  breast_feeding character(1), -- null for male, true or false for female
   vegeterian character(1),
   hear_us_by character varying(32), -- Friends/Family(Who) ...
   CONSTRAINT twp_profile_pkey PRIMARY KEY (twp_profile_id)
