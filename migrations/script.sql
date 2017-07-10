@@ -118,6 +118,28 @@ ALTER TABLE adempiere.twp_foods
   OWNER TO adempiere;
 COMMENT ON TABLE adempiere.twp_foods
   IS 'Food choices for vegeterians';
+
+  CREATE TABLE adempiere.twp_find_us
+(
+  twp_find_us_id numeric(10,0) NOT NULL,
+  twp_find_us_uu character varying(36) DEFAULT NULL::character varying,
+  ad_client_id numeric(10,0) NOT NULL,
+  ad_org_id numeric(10,0) NOT NULL,
+  isactive character(1) NOT NULL DEFAULT 'Y'::bpchar,
+  created timestamp without time zone NOT NULL DEFAULT now(),
+  createdby numeric(10,0) NOT NULL,
+  updated timestamp without time zone NOT NULL DEFAULT now(),
+  updatedby numeric(10,0) NOT NULL,
+  find_us_by character varying(255) NOT NULL,
+  CONSTRAINT twp_find_us_pkey PRIMARY KEY (twp_find_us_id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE adempiere.twp_find_us
+  OWNER TO adempiere;
+COMMENT ON TABLE adempiere.twp_find_us
+  IS 'Indicates how the user heard about us';
   
   CREATE TABLE adempiere.twp_profile_conditions
 (
@@ -205,6 +227,36 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE adempiere.twp_profile_foods
+  OWNER TO adempiere;
+  
+  
+CREATE TABLE adempiere.twp_profile_find_us
+(
+  twp_profile_find_us_id numeric(10,0) NOT NULL,
+  twp_profile_find_us_uu character varying(36) DEFAULT NULL::character varying,
+  ad_client_id numeric(10,0) NOT NULL,
+  ad_org_id numeric(10,0) NOT NULL,
+  isactive character(1) NOT NULL DEFAULT 'Y'::bpchar,
+  created timestamp without time zone NOT NULL DEFAULT now(),
+  createdby numeric(10,0) NOT NULL,
+  updated timestamp without time zone NOT NULL DEFAULT now(),
+  updatedby numeric(10,0) NOT NULL,
+  twp_profile_id numeric(10,0) NOT NULL,
+  twp_find_us_id numeric(10,0) NOT NULL,
+  note character varying(255),
+  CONSTRAINT twp_profile_find_us_pkey PRIMARY KEY (twp_profile_find_us_id),
+  CONSTRAINT twpprofilefindus_twpfindus FOREIGN KEY (twp_find_us_id)
+      REFERENCES adempiere.twp_find_us (twp_find_us_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT twpprofilefindus_twpprofile FOREIGN KEY (twp_profile_id)
+      REFERENCES adempiere.twp_profile (twp_profile_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT twp_profile_find_us_unique UNIQUE (twp_profile_id, twp_find_us_id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE adempiere.twp_profile_find_us
   OWNER TO adempiere;
   
   
