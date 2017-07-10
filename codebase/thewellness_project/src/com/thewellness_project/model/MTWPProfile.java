@@ -1,7 +1,13 @@
 package com.thewellness_project.model;
 
 import java.sql.ResultSet;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Properties;
+
+import org.compiere.util.EMail;
+import org.compiere.util.Msg;
+import org.compiere.util.Util;
 
 public class MTWPProfile extends X_TWP_Profile{
 
@@ -21,4 +27,26 @@ public class MTWPProfile extends X_TWP_Profile{
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * 	Before Save
+	 *	@param newRecord new
+	 *	@return true
+	 */
+	protected boolean beforeSave (boolean newRecord)
+	{
+		if (!Util.isEmpty(getEMail()) && (newRecord || is_ValueChanged(COLUMNNAME_EMail))) {
+			if (! EMail.validate(getEMail())) {
+				log.saveError("SaveError", Msg.getMsg(getCtx(), "InvalidEMailFormat") + Msg.getElement(getCtx(), COLUMNNAME_EMail) + " - [" + getEMail() + "]");
+				return false;
+			}
+		}
+		if (getdate_of_birth() != null && (newRecord || is_ValueChanged(COLUMNNAME_date_of_birth))) {
+			Timestamp dob = getdate_of_birth();
+			if (dob.after(new Date())) {
+				log.saveError("SaveError", "Invalid date format. Date of birth can not be in the future " + Msg.getElement(getCtx(), COLUMNNAME_date_of_birth) + " - [" + getdate_of_birth() + "]");
+				return false;
+			}
+		}
+		return true;
+	}	//	beforeSave
 }
