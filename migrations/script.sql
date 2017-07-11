@@ -30,7 +30,6 @@ CREATE TABLE adempiere.twp_profile
   pregnant character(1), -- null for males, true or false for female
   breast_feeding character(1), -- null for male, true or false for female
   vegeterian character(1),
-  hear_us_by character varying(32), -- Friends/Family(Who) ...
   CONSTRAINT twp_profile_pkey PRIMARY KEY (twp_profile_id)
 )
 WITH (
@@ -46,13 +45,6 @@ COMMENT ON COLUMN adempiere.twp_profile.weight IS 'Weight in kg';
 COMMENT ON COLUMN adempiere.twp_profile.goal_weight IS 'Goal weight in kg';
 COMMENT ON COLUMN adempiere.twp_profile.pregnant IS 'null for males, true or false for female';
 COMMENT ON COLUMN adempiere.twp_profile.breast_feeding IS 'null for male, true or false for female';
-COMMENT ON COLUMN adempiere.twp_profile.hear_us_by IS 'Friends/Family(Who) 
-Facebook 
-Instagram
-Website 
-Magazine 
-Other';
-
   
 CREATE TABLE adempiere.twp_medical_conditions
 (

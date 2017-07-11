@@ -165,15 +165,6 @@ public interface I_TWP_Profile
 	/** Get goal_weight	  */
 	public BigDecimal getgoal_weight();
 
-    /** Column name hear_us_by */
-    public static final String COLUMNNAME_hear_us_by = "hear_us_by";
-
-	/** Set hear_us_by	  */
-	public void sethear_us_by (String hear_us_by);
-
-	/** Get hear_us_by	  */
-	public String gethear_us_by();
-
     /** Column name Height */
     public static final String COLUMNNAME_Height = "Height";
 

@@ -33,7 +33,7 @@ public class X_TWP_Profile extends PO implements I_TWP_Profile, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20170710L;
+	private static final long serialVersionUID = 20170711L;
 
     /** Standard Constructor */
     public X_TWP_Profile (Properties ctx, int TWP_Profile_ID, String trxName)
@@ -220,20 +220,6 @@ public class X_TWP_Profile extends PO implements I_TWP_Profile, I_Persistent
 		if (bd == null)
 			 return Env.ZERO;
 		return bd;
-	}
-
-	/** Set hear_us_by.
-		@param hear_us_by hear_us_by	  */
-	public void sethear_us_by (String hear_us_by)
-	{
-		set_Value (COLUMNNAME_hear_us_by, hear_us_by);
-	}
-
-	/** Get hear_us_by.
-		@return hear_us_by	  */
-	public String gethear_us_by () 
-	{
-		return (String)get_Value(COLUMNNAME_hear_us_by);
 	}
 
 	/** Set Height.
