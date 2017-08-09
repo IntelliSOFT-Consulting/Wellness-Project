@@ -251,4 +251,52 @@ WITH (
 ALTER TABLE adempiere.twp_profile_find_us
   OWNER TO adempiere;
   
+CREATE TABLE adempiere.twp_admin_figures
+(
+  twp_admin_figures_id numeric(10,0) NOT NULL,
+  twp_admin_figures_uu character varying(36) DEFAULT NULL::character varying,
+  ad_client_id numeric(10,0) NOT NULL,
+  ad_org_id numeric(10,0) NOT NULL,
+  isactive character(1) NOT NULL DEFAULT 'Y'::bpchar,
+  created timestamp without time zone NOT NULL DEFAULT now(),
+  createdby numeric(10,0) NOT NULL,
+  updated timestamp without time zone NOT NULL DEFAULT now(),
+  updatedby numeric(10,0) NOT NULL,
+  admin_figure numeric(4,2) NOT NULL,
+  gender character varying(10) NOT NULL, -- MALE for male, FEMALE for female
+  food_type character(1) NOT NULL, -- 1=meat 2=fish 3=poultry 4=cheese 5=feta
+  value numeric(4,2) NOT NULL, 
+  CONSTRAINT twp_admin_figures_pkey PRIMARY KEY (twp_admin_figures_id),
+  CONSTRAINT twp_admin_figures_food_type_check CHECK(food_type in(1,2,3,4,5))
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE adempiere.twp_admin_figures
+  OWNER TO adempiere;
+
+COMMENT ON COLUMN adempiere.twp_admin_figures.gender IS 'MALE for male, FEMALE for female';
+COMMENT ON COLUMN adempiere.twp_admin_figures.food_type IS '1=meat 2=fish 3=poultry 4=cheese 5=feta';
   
+CREATE TABLE adempiere.twp_lab_test
+(
+  twp_lab_test_id numeric(10,0) NOT NULL,
+  twp_admin_figures_uu character varying(36) DEFAULT NULL::character varying,
+  ad_client_id numeric(10,0) NOT NULL,
+  ad_org_id numeric(10,0) NOT NULL,
+  isactive character(1) NOT NULL DEFAULT 'Y'::bpchar,
+  created timestamp without time zone NOT NULL DEFAULT now(),
+  createdby numeric(10,0) NOT NULL,
+  updated timestamp without time zone NOT NULL DEFAULT now(),
+  updatedby numeric(10,0) NOT NULL,
+  test_type character varying(32) NOT NULL,
+  profile character varying(10) NOT NULL,
+  min_value numeric(6,2),
+  max_value numeric(6,2),
+  CONSTRAINT twp_lab_test_pkey PRIMARY KEY (twp_lab_test_id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE adempiere.twp_admin_figures
+  OWNER TO adempiere;
